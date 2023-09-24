@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -o errexit -o nounset -o pipefail -o posix
+
+wget https://storage.googleapis.com/alloydb-auth-proxy/v1.4.0/alloydb-auth-proxy.linux.amd64 -O alloydb-auth-proxy
+
+chmod +x alloydb-auth-proxy
+
+./alloydb-auth-proxy "${instance_uri}" --address 0.0.0.0

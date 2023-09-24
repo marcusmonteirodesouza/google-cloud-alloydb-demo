@@ -25,6 +25,8 @@ module "org_policy_exceptions" {
 module "network" {
   source = "./modules/network"
 
+  alloydb_region = var.alloydb_region
+
   depends_on = [
     module.org_policy_exceptions.org_policy_update_completed
   ]
@@ -33,7 +35,9 @@ module "network" {
 module "app" {
   source = "./modules/app"
 
-  region         = var.region
-  alloydb_region = var.alloydb_region
-  network_name   = module.network.network_name
+  region                         = var.region
+  alloydb_region                 = var.alloydb_region
+  network_name                   = module.network.network_name
+  alloydb_region_subnet_name     = module.network.alloydb_region_subnet_name
+  allow_ssh_from_iap_network_tag = module.network.allow_ssh_from_iap_network_tag
 }

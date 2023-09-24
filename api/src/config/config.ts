@@ -2,6 +2,8 @@ import {Joi} from 'celebrate';
 
 const envVarsSchema = Joi.object()
   .keys({
+    ALLOYDB_AUTH_PROXY_VM_NAME: Joi.string(),
+    ALLOYDB_AUTH_PROXY_VM_ZONE: Joi.string(),
     GOOGLE_PROJECT_ID: Joi.string().required(),
     K_REVISION: Joi.string().required(),
     K_SERVICE: Joi.string().required(),
@@ -25,6 +27,12 @@ if (error) {
 }
 
 const config = {
+  allowDbProxy: {
+    vm: {
+      name: envVars.ALLOYDB_AUTH_PROXY_VM_NAME,
+      zone: envVars.ALLOYDB_AUTH_PROXY_VM_ZONE,
+    },
+  },
   database: {
     host: envVars.PGHOST,
     port: envVars.PGPORT,

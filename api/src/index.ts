@@ -1,21 +1,13 @@
-import {createApp} from './app';
-import {createDB} from './db';
+import {app} from './app';
+import {db} from './db';
 import {logger} from './logger';
 import {config} from './config';
 
-async function startServer() {
-  await createDB();
-
-  const {app, db} = createApp();
-
+app.listen(config.port, async () => {
   await db.migrate.latest();
 
-  app.listen(config.port, () => {
-    logger.info(
-      {},
-      `Google AlloyDB demo API server listening on port ${config.port}...`
-    );
-  });
-}
-
-startServer();
+  logger.info(
+    {},
+    `Google AlloyDB demo API server listening on port ${config.port}...`
+  );
+});

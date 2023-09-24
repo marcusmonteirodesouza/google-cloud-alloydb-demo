@@ -12,3 +12,13 @@ variable "network_name" {
   type        = string
   description = "The name of the VPC network to attach resources to."
 }
+
+variable "alloydb_region_subnet_name" {
+  type        = string
+  description = "Subnet located in the same VPC and region as the AlloyDB instance."
+}
+
+variable "allow_ssh_from_iap_network_tag" {
+  type        = string
+  description = "Allow SSH from IAP network tag."
+}
