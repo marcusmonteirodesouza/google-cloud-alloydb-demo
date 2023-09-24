@@ -72,17 +72,6 @@ resource "google_alloydb_instance" "app_primary" {
 }
 
 # AlloyDB Auth Proxy VM. See https://cloud.google.com/alloydb/docs/auth-proxy/connect
-resource "google_service_account" "alloydb_auth_proxy_vm" {
-  account_id   = "alloydb-auth-proxy-vm-sa"
-  display_name = "Demo App AlloyDB Auth Proxy VM service acocunt"
-}
-
-resource "google_project_iam_member" "alloydb_auth_proxy_vm_sa_alloydb_client" {
-  project = data.google_project.project.project_id
-  role    = "roles/alloydb.client"
-  member  = "serviceAccount:${google_service_account.alloydb_auth_proxy_vm.email}"
-}
-
 data "template_file" "alloydb_auth_proxy_vm_startup_script" {
   template = file("${path.module}/alloydb-auth-proxy-vm-startup-script.sh.template")
   vars = {
@@ -107,7 +96,7 @@ resource "google_compute_instance" "alloydb_auth_proxy" {
   }
 
   service_account {
-    email  = google_service_account.alloydb_auth_proxy_vm.email
+    email  = var.alloydb_auth_proxy_vm_sa_email
     scopes = ["cloud-platform"]
   }
 
@@ -116,8 +105,4 @@ resource "google_compute_instance" "alloydb_auth_proxy" {
   ]
 
   metadata_startup_script = data.template_file.alloydb_auth_proxy_vm_startup_script.rendered
-
-  depends_on = [
-    google_project_iam_member.alloydb_auth_proxy_vm_sa_alloydb_client
-  ]
 }

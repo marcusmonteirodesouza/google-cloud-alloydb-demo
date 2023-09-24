@@ -22,6 +22,10 @@ module "org_policy_exceptions" {
   ]
 }
 
+module "iam" {
+  source = "./modules/iam"
+}
+
 module "network" {
   source = "./modules/network"
 
@@ -40,4 +44,6 @@ module "app" {
   network_name                   = module.network.network_name
   alloydb_region_subnet_name     = module.network.alloydb_region_subnet_name
   allow_ssh_from_iap_network_tag = module.network.allow_ssh_from_iap_network_tag
+  api_sa_email                   = module.iam.api_sa_email
+  alloydb_auth_proxy_vm_sa_email = module.iam.alloydb_auth_proxy_vm_sa_email
 }

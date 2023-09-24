@@ -22,3 +22,13 @@ variable "allow_ssh_from_iap_network_tag" {
   type        = string
   description = "Allow SSH from IAP network tag."
 }
+
+variable "api_sa_email" {
+  type        = string
+  description = "The API service account email."
+}
+
+variable "alloydb_auth_proxy_vm_sa_email" {
+  type        = string
+  description = "The AlloyDB auth proxy VM service account email."
+}
